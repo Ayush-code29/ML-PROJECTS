@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split,cross_val_score,KFold
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 df = pd.read_csv('house-prices.csv')
@@ -68,4 +68,20 @@ print("Adjusted R2 Score:", adjusted_r2)
 print("MAE:", mean_absolute_error(y_test, y_pred))
 print("RMSE:", np.sqrt(mean_squared_error(y_test, y_pred)))
 
-print(df.head())
+kfold = KFold(
+    n_splits=5,
+    shuffle=True,
+    random_state=42
+)
+
+cv_scores = cross_val_score(
+    LinearRegression(),
+    X_train,
+    y_train,
+    cv=kfold,
+    scoring='r2'
+)
+
+print("R2 Score for each fold:", cv_scores)
+print("Mean CV R2 Score:", cv_scores.mean())
+print("Standard Deviation:", cv_scores.std())
