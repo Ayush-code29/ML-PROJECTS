@@ -83,7 +83,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 #     print(f"\n{'=' * 45}")
 #     print(f"Model: {name}")
-#     print(f"Accuracy: {accuracy * 100:.2f}%")
+#     
 #     print("\nClassification Report:")
 #     print(classification_report(y_test, y_pred))
 model = LogisticRegression()
@@ -91,4 +91,4 @@ model.fit(X_train,y_train)
 y_pred = model.predict(X_test)
 print('accuracy of this model is:')
 acc = accuracy_score(y_pred,y_test)
-print(int(acc*100),'%')
+print(f"{acc * 100:.2f}%")
